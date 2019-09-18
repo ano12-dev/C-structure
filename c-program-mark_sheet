@@ -1,0 +1,83 @@
+#include<stdio.h>
+
+struct studentInfo
+{
+	int rollNo;
+	int subject[4];
+	char name[20];
+};
+void print(struct studentInfo[], int[]); 
+int main()
+{
+	struct studentInfo student[5];
+	int i,j,garbage[5];
+	// Taking user input of name and roll number:
+	for(i=0;i<5;i++)
+	{
+		printf(" Enter the name of student[%d]: ",i+1);
+		scanf("%s",student[i].name);
+		printf(" Enter the roll number of %s: ",student[i].name);
+		scanf("%d",&student[i].rollNo);
+		printf("\n");
+	}
+	// Taking user input of marks of each subjects for each student:
+	for(i=0;i<5;i++)
+	{
+		printf(" Enter marks of %s\n",student[i].name);
+		for(j=0;j<4;j++)
+		{
+			printf(" Enter the marks for subject[%d]: ",j+1);
+			scanf("%d",&student[i].subject[j]);
+		}
+	}
+	// Checking weather the student is pass or fail.
+	for(i=0;i<5;i++)
+	{
+		for(j=0;j<4;j++)
+		{
+			if(student[i].subject[j]<40)
+			{	
+				garbage[i] = 0;
+				goto point;
+			}
+		}
+		if(garbage[i]==0)
+		{
+			point:
+			;
+		}	
+	}
+	print(student,garbage);
+}
+
+void print(struct studentInfo student[], int garbage[])
+{
+	int i,j,total;
+	float percentage;
+	// Designing:
+	printf("\n\t\t\t\t\t STUDENT INFORMATION\n\n");
+	printf("\n Name\tRoll no\t\tSubject 1\tSubject 2\tSubject 3\tSubject 4\tTotal\tPercentage\tResult\n");
+	printf("=========================================================================================================================\n");
+	// Printing all information including total and percentage:
+	for(i=0;i<5;i++)
+	{
+		printf("%s\t%d\t",student[i].name,student[i].rollNo);
+		total = 0;
+		percentage = 0;
+		for(j=0;j<4;j++)
+		{
+			total = total+student[i].subject[j];
+			percentage =(float)total/4;
+			printf("\t%d\t",student[i].subject[j]);
+		}
+		printf("\t%d\t%f",total,percentage);
+		if(garbage[i]==0)
+		{
+			printf("\tFAIL\n");
+		}
+		else
+		{
+			printf("\tPASS\n");
+		}
+	}
+}
